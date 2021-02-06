@@ -211,7 +211,88 @@ let options () =
   print_string "\n"
 
 
+type point2d = {
+  x : float;
+  y : float;
+}
+
+let magnitude { x = x_pos; y = y_pos } =
+  Stevia.sqrt (Stevia.float_add (Stevia.pow x_pos 2.0) (Stevia.pow y_pos 2.0))
+
+
+let magnitude2 { x; y } =
+  Stevia.sqrt (Stevia.float_add (Stevia.pow x 2.0) (Stevia.pow y 2.0))
+
+
+let distance2 v1 v2 =
+  magnitude { x = Stevia.float_sub v1.x v2.x; y = Stevia.float_sub v1.y v2.y }
+
+
+type circle_desc = {
+  center : point2d;
+  radius : float;
+}
+
+type rect_desc = {
+  lower_left : point2d;
+  width : float;
+  height : float;
+}
+
+type segment_desc = {
+  endpoint1 : point2d;
+  endpoint2 : point2d;
+}
+
+type scene_element =
+  | Circle  of circle_desc
+  | Rect    of rect_desc
+  | Segment of segment_desc
+
+let is_inside_scene_element point scene_element =
+  match scene_element with
+    | Circle { center; radius } -> distance2 center point < radius
+    | Rect { lower_left; width; height } ->
+      point.x > lower_left.x
+      && point.x < Stevia.float_add lower_left.x width
+      && point.y > lower_left.y
+      && point.y < Stevia.float_add lower_left.y height
+    | Segment _ -> false
+
+
+let is_inside_scene point scene =
+  Lists.any (fun el -> is_inside_scene_element point el) scene
+
+
+let records_and_variants () =
+  print_string "records_and_variants\n" ;
+  print { x = 3.0; y = -4.0 } ;
+  print
+    (is_inside_scene { x = 3.0; y = 7.0 }
+       [ Circle { center = { x = 4.0; y = 4.0 }; radius = 0.5 } ] ) ;
+  print
+    (is_inside_scene { x = 3.0; y = 7.0 }
+       [ Circle { center = { x = 4.0; y = 4.0 }; radius = 5.0 } ] ) ;
+  print_string "\n"
+
+
+let imperative_programming () =
+  print_string "imperative_programming\n" ;
+  print_string
+    "Probably none of imperative parts of OCaml are supported in Caramel!\n" ;
+  (* print [| 1; 2; 3; 4 |] ; *)
+  print_string "\n"
+
+
 let tuples_lists_options_and_pattern_matching () =
   tuples () ;
   lists () ;
-  options ()
+  options () ;
+  records_and_variants () ;
+  imperative_programming ()
+
+
+let run () =
+  caramel_as_a_calculator () ;
+  functions_and_type_inference () ;
+  tuples_lists_options_and_pattern_matching ()
