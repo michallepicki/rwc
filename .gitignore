@@ -1,3 +1,5 @@
 *.beam
 *.cmi
 */caramel_runtime.erl
+*/sweetness.erl
+*/oof.erl
