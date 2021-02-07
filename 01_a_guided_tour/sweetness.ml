@@ -141,8 +141,6 @@ let rec remove_sequential_duplicates list =
         if first = second then new_tl else first :: new_tl
 
 
-(* asdf asdf asdf fsda *)
-
 let lists () =
   print_string "lists\n" ;
   let languages = [ "Caramel"; "Perl"; "C" ] in
