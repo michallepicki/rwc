@@ -191,7 +191,7 @@ let downcase_extension filename =
 
 
 let downcase_extension2 filename =
-  match Stevia.string_split filename "." Oof.Trailing with
+  match Stevia.string_split filename "." Steviatypes.Trailing with
     | []            -> filename
     | [ _ ]         -> filename
     | [ base; ext ] -> base ^ "." ^ Stevia.string_lowercase ext
