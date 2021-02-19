@@ -5,16 +5,9 @@ let print thing = Io.format "~0tp~n" [ thing ]
 let caramel_as_a_calculator () =
   print_string "caramel_as_a_calculator\n" ;
   print (3 + 4) ;
-  (* following has wrong result, should be 2 *)
-  (* print (8 / 3) ; *)
-  print (Stevia.int_div 8 3) ;
-  (* following doesn't currently compile for two reasons, +. is not defined and
-     6. is not valid erlang *)
-  (* print (3.5 +. 6.) ; *)
-  print (Stevia.float_add 3.5 6.0) ;
-  (* following has wrong result, should be 100 not 100.0 *)
-  (* print (30_000_000 / 300_000) ; *)
-  print (Stevia.int_div 30_000_000 300_000) ;
+  print (8 / 3) ;
+  print (3.5 +. 6.) ;
+  print (30_000_000 / 300_000) ;
   print (3 * 5 > 14) ;
   let x = 3 + 4 in
   let y = x + x in
@@ -31,36 +24,30 @@ let caramel_as_a_calculator () =
 
 let square x = x * x
 
-(* following doesn't currently compile, /. and float_of_int don't work *)
-(* let ratio0 x y =
- *   float_of_int x /. float_of_int y
- *)
+let ratio x y = Erlang.float_of_int x /. Erlang.float_of_int y
 
 (* following doesn't currently compile, open doesn't do what it should do *)
-(* open Stevia
+(* open Erlang
  * let ratio1 x y =
- *   float_div (float_of_int x) (float_of_int y)
+ *   (float_of_int x) /. (float_of_int y)
  *)
 
 (* following doesn't currently compile either *)
 (* let ratio2 x y =
- *   let open Stevia in
- *   float_div (float_of_int x) (float_of_int y)
+ *   let open Erlang in
+ *   (float_of_int x) /. (float_of_int y)
  *)
 
 (* following doesn't currently compile either *)
 (* let ratio3 x y =
- *   Stevia.(float_div (float_of_int x) (float_of_int y))
+ *   Erlang.((float_of_int x) /. (float_of_int y))
  *)
-
-let ratio x y = Stevia.float_div (Stevia.float_of_int x) (Stevia.float_of_int y)
 
 let sum_if_true test first second =
   (if test first then first else 0) + if test second then second else 0
 
 
-(* book has % but that doesn't work, caramel stdlib has mod but it doesn't work *)
-let even x = Stevia.modulo x 2 = 0
+let even x = x mod 2 = 0
 
 (* following doesn't currently compile because of type annotations not being supported?
  * which is weird because the caramel manual suggests adding annotations sometimes for clarity
@@ -78,7 +65,7 @@ let long_string s = string_length s > 6
 
 let big_number x = x > 3
 
-let is_a_multiple x y = Stevia.modulo x y = 0
+let is_a_multiple x y = x mod y = 0
 
 let functions_and_type_inference () =
   print_string "functions_and_type_inference\n" ;
@@ -95,13 +82,8 @@ let functions_and_type_inference () =
 
 (* book has **. but that doesn't work, caramel stdlib has ** but that doesn't
    work *)
-(* caramel -. doesn't work *)
-(* caramel sqrt doesn't work *)
 let distance (x1, y1) (x2, y2) =
-  Stevia.sqrt
-    (Stevia.float_add
-       (Stevia.pow (Stevia.float_sub x1 x2) 2.0)
-       (Stevia.pow (Stevia.float_sub y1 y2) 2.0) )
+  Math.sqrt (Stevia.pow (x1 -. x2) 2.0 +. Stevia.pow (y1 -. y2) 2.0)
 
 
 let tuples () =
@@ -171,7 +153,7 @@ let lists () =
         print_string "\n"
 
 
-let divide x y = if y = 0 then None else Some (Stevia.int_div x y)
+let divide x y = if y = 0 then None else Some (x / y)
 
 let string_rsplit2 s c =
   let characters_reversed = Lists.reverse (Binary.bin_to_list s) in
@@ -217,16 +199,12 @@ type point2d = {
 }
 
 let magnitude { x = x_pos; y = y_pos } =
-  Stevia.sqrt (Stevia.float_add (Stevia.pow x_pos 2.0) (Stevia.pow y_pos 2.0))
+  Math.sqrt (Stevia.pow x_pos 2.0 +. Stevia.pow y_pos 2.0)
 
 
-let magnitude2 { x; y } =
-  Stevia.sqrt (Stevia.float_add (Stevia.pow x 2.0) (Stevia.pow y 2.0))
+let magnitude2 { x; y } = Math.sqrt (Stevia.pow x 2.0 +. Stevia.pow y 2.0)
 
-
-let distance2 v1 v2 =
-  magnitude { x = Stevia.float_sub v1.x v2.x; y = Stevia.float_sub v1.y v2.y }
-
+let distance2 v1 v2 = magnitude { x = v1.x -. v2.x; y = v1.y -. v2.y }
 
 type circle_desc = {
   center : point2d;
@@ -254,9 +232,9 @@ let is_inside_scene_element point scene_element =
     | Circle { center; radius } -> distance2 center point < radius
     | Rect { lower_left; width; height } ->
       point.x > lower_left.x
-      && point.x < Stevia.float_add lower_left.x width
+      && point.x < lower_left.x +. width
       && point.y > lower_left.y
-      && point.y < Stevia.float_add lower_left.y height
+      && point.y < lower_left.y +. height
     | Segment _ -> false
 
 
@@ -285,15 +263,12 @@ type running_sum = {
   mutable samples : int;
 }
 
-let mean rsum = Stevia.float_div rsum.sum (Stevia.float_of_int rsum.samples)
+let mean rsum = rsum.sum /. Erlang.float_of_int rsum.samples
 
 let stdev rsum =
-  Stevia.sqrt
-    (Stevia.float_sub
-       (Stevia.float_div rsum.sum_sq (Stevia.float_of_int rsum.samples))
-       (Stevia.pow
-          (Stevia.float_div rsum.sum (Stevia.float_of_int rsum.samples))
-          2.0 ) )
+  Math.sqrt
+    ( (rsum.sum_sq /. Erlang.float_of_int rsum.samples)
+    -. Stevia.pow (rsum.sum /. Erlang.float_of_int rsum.samples) 2.0 )
 
 
 let create () = { sum = 0.0; sum_sq = 0.0; samples = 0 }
@@ -301,8 +276,8 @@ let create () = { sum = 0.0; sum_sq = 0.0; samples = 0 }
 (* "monadic" (?) <- does not work in caramel
  * let update rsum x =
  *   rsum.samples <- rsum.samples + 1 ;
- *   rsum.sum     <- Stevia.float_add rsum.sum x ;
- *   rsum.sum_sq  <- Stevia.float_add rsum.sum_sq (Stevia.float_mul x x)
+ *   rsum.sum     <- rsum.sum +. x ;
+ *   rsum.sum_sq  <- rsum.sum_sq +. (x *. x)
  *)
 
 (* type 'a ref = { mutable contents : 'a } *)
@@ -366,8 +341,7 @@ let rec read_and_accumulate accum =
   let line = Stevia.io_get_line "" in
     match line with
       | None   -> accum
-      | Some x ->
-        read_and_accumulate (Stevia.float_add accum (Stevia.float_of_string x))
+      | Some x -> read_and_accumulate (accum +. Stevia.float_of_string x)
 
 
 let complete_program () =
