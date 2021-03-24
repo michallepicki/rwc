@@ -49,8 +49,10 @@ let sum_if_true test first second =
 
 let even x = x mod 2 = 0
 
-(* following doesn't currently compile because of type annotations not being supported?
- * which is weird because the caramel manual suggests adding annotations sometimes for clarity
+(* following doesn't currently compile
+ * because of type annotations not being supported?
+ * which is weird because the caramel manual suggests
+ * adding annotations sometimes for clarity
  *)
 (*  let sum_if_true2 (test : int -> bool) (x : int) (y : int) : int =
  *  (if test x then x else 0)
@@ -83,7 +85,7 @@ let functions_and_type_inference () =
 (* book has **. but that doesn't work, caramel stdlib has ** but that doesn't
    work *)
 let distance (x1, y1) (x2, y2) =
-  Math.sqrt (Stevia.pow (x1 -. x2) 2.0 +. Stevia.pow (y1 -. y2) 2.0)
+  Math.sqrt (My_externals.pow (x1 -. x2) 2.0 +. My_externals.pow (y1 -. y2) 2.0)
 
 
 let tuples () =
@@ -169,14 +171,14 @@ let string_rsplit2 s c =
 let downcase_extension filename =
   match string_rsplit2 filename '.' with
     | None             -> filename
-    | Some (base, ext) -> base ^ "." ^ Stevia.string_lowercase ext
+    | Some (base, ext) -> base ^ "." ^ My_externals.string_lowercase ext
 
 
 let downcase_extension2 filename =
-  match Stevia.string_split filename "." Steviatypes.Trailing with
+  match My_externals.string_split filename "." My_types.Trailing with
     | []            -> filename
     | [ _ ]         -> filename
-    | [ base; ext ] -> base ^ "." ^ Stevia.string_lowercase ext
+    | [ base; ext ] -> base ^ "." ^ My_externals.string_lowercase ext
 
 
 let options () =
@@ -199,10 +201,12 @@ type point2d = {
 }
 
 let magnitude { x = x_pos; y = y_pos } =
-  Math.sqrt (Stevia.pow x_pos 2.0 +. Stevia.pow y_pos 2.0)
+  Math.sqrt (My_externals.pow x_pos 2.0 +. My_externals.pow y_pos 2.0)
 
 
-let magnitude2 { x; y } = Math.sqrt (Stevia.pow x 2.0 +. Stevia.pow y 2.0)
+let magnitude2 { x; y } =
+  Math.sqrt (My_externals.pow x 2.0 +. My_externals.pow y 2.0)
+
 
 let distance2 v1 v2 = magnitude { x = v1.x -. v2.x; y = v1.y -. v2.y }
 
@@ -268,7 +272,7 @@ let mean rsum = rsum.sum /. Erlang.float_of_int rsum.samples
 let stdev rsum =
   Math.sqrt
     ( (rsum.sum_sq /. Erlang.float_of_int rsum.samples)
-    -. Stevia.pow (rsum.sum /. Erlang.float_of_int rsum.samples) 2.0 )
+    -. My_externals.pow (rsum.sum /. Erlang.float_of_int rsum.samples) 2.0 )
 
 
 let create () = { sum = 0.0; sum_sq = 0.0; samples = 0 }
@@ -338,10 +342,10 @@ let shortcircuit () =
 (* same issue with || probably *)
 
 let rec read_and_accumulate accum =
-  let line = Stevia.io_get_line "" in
+  let line = My_externals.io_get_line "" in
     match line with
       | None   -> accum
-      | Some x -> read_and_accumulate (accum +. Stevia.float_of_string x)
+      | Some x -> read_and_accumulate (accum +. My_externals.float_of_string x)
 
 
 let complete_program () =

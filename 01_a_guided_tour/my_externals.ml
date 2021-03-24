@@ -1,6 +1,12 @@
 external cheat : 'a -> 'b = ""
+
 external pow : float -> float -> float = ""
-external string_split : string -> string -> Steviatypes.string_split_opt -> string list = ""
+
+external string_split :
+  string -> string -> My_types.string_split_opt -> string list = ""
+
 external string_lowercase : string -> string = ""
+
 external io_get_line : string -> string option = ""
+
 external float_of_string : string -> float = ""

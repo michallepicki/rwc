@@ -1,5 +1,3 @@
 *.beam
 *.cmi
 */caramel_runtime.erl
-*/sweetness.erl
-*/steviatypes.erl

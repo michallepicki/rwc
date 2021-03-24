@@ -20,11 +20,11 @@ let run () =
   (* should this work? formatter drops (and compiler ignores) parens and it
      changes the meaning *)
   (* let dashed_languages =
-   *   (let language_list = Stevia.string_split languages "," Steviatypes.All in
+   *   (let language_list = My_externals.string_split languages "," My_externalstypes.All in
    *    binary_concat language_list "-") in
    * print dashed_languages ;
    *)
-  let language_list = Stevia.string_split languages "," Steviatypes.All in
+  let language_list = My_externals.string_split languages "," My_types.All in
   let dashed_languages = binary_concat language_list "-" in
     print_string dashed_languages ;
     print_string "\n" ;

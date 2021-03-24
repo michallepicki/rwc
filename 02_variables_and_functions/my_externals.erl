@@ -1,4 +1,4 @@
--module(stevia).
+-module(my_externals).
 -export([cheat/1, string_split/3]).
 
 cheat(X) -> X.

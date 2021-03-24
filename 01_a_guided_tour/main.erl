@@ -5,6 +5,6 @@ main(_) ->
     fun(Name) ->
       {ok, ModuleName, Binary} = compile:file(Name, [binary]),
       code:load_binary(ModuleName, '', Binary) end,
-    ['caramel_runtime', 'stevia', 'sweetness']),
+    ['caramel_runtime', 'my_externals', 'a_guided_tour']),
   io:format(<<"~ts">>, [<<"Sweets acquired!\n\n">>]),
-  sweetness:run().
+  a_guided_tour:run().
