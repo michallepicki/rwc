@@ -45,6 +45,7 @@
 -export([string_rsplit2/2]).
 -export([sum/1]).
 -export([sum_if_true/3]).
+-export([sum_if_true2/3]).
 -export([tuples/0]).
 -export([tuples_lists_options_and_pattern_matching/0]).
 
@@ -121,6 +122,15 @@ end).
 -spec even(integer()) -> boolean().
 even(X) -> erlang:'=:='(erlang:'rem'(X, 2), 0).
 
+-spec sum_if_true2(fun((integer()) -> boolean()), integer(), integer()) -> integer().
+sum_if_true2(Test, X, Y) -> erlang:'+'(case Test(X) of
+  true -> X;
+  false -> 0
+end, case Test(Y) of
+  true -> Y;
+  false -> 0
+end).
+
 -spec first_if_true(fun((A) -> boolean()), A, A) -> A.
 first_if_true(Test, X, Y) ->
   case Test(X) of
@@ -148,6 +158,8 @@ functions_and_type_inference() ->
   print(ratio(4, 7)),
   print(sum_if_true(fun even/1, 3, 4)),
   print(sum_if_true(fun even/1, 2, 4)),
+  print(sum_if_true2(fun even/1, 3, 4)),
+  print(sum_if_true2(fun even/1, 2, 4)),
   print(first_if_true(fun long_string/1, <<"short">>, <<"loooooong">>)),
   print(first_if_true(fun big_number/1, 4, 3)),
   print(is_a_multiple(8, 2)),
@@ -360,6 +372,7 @@ imperative_programming() ->
   print_string(<<"Probably none of imperative parts of OCaml are supported in Caramel, that's fine\n">>),
   Rsum = create(),
   begin
+    shortcircuit(),
     complete_program(),
     print_string(<<"\n">>)
   end.

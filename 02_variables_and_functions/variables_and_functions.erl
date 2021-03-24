@@ -14,20 +14,21 @@ print(Thing) -> io:format(<<"~0tp~n">>, [Thing | []]).
 
 -spec binary_concat(list(binary()), binary()) -> binary().
 binary_concat(Binaries, Joiner) ->
-  Myjoin = fun
+  Join = fun
     (Elem, Acc) -> caramel_runtime:binary_concat(Acc, Elem)
   end,
-  lists:foldl(Myjoin, <<"">>, lists:join(Joiner, Binaries)).
+  lists:foldl(Join, <<"">>, lists:join(Joiner, Binaries)).
 
 -spec run() -> ok.
 run() ->
   print_string(<<"variables\n">>),
   Languages = <<"OCaml,Perl,C++,C">>,
-  Language_list = my_externals:string_split(Languages, <<",">>, all),
-  Dashed_languages = binary_concat(Language_list, <<"-">>),
+  Dashed_languages = begin
+    Language_list = my_externals:string_split(Languages, <<",">>, all),
+    binary_concat(Language_list, <<"-">>)
+  end,
   begin
-    print_string(Dashed_languages),
-    print_string(<<"\n">>),
+    print(Dashed_languages),
     print_string(<<"\n">>)
   end.
 
