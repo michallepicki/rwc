@@ -5,4 +5,4 @@ caramel_location=$(dirname $(which caramel))
 cp "$caramel_location"/../lib/caramel/stdlib/caramel_runtime.erl caramel_runtime.erl
 caramel fmt *.ml
 caramel compile `caramel sort-deps *.ml` &&
-  escript main.erl
+  escript -c main.erl
