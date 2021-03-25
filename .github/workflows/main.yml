@@ -1,0 +1,35 @@
+name: test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: docker://hexpm/erlang:23.3-alpine-3.13.2
+    steps:
+    - uses: actions/checkout@v2
+
+    - run: echo "`pwd`/caramel/bin" >> $GITHUB_PATH
+    - name: Install caramel
+      run: |
+        apk add curl unzip tar
+        curl --stderr - -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/AbstractMachinesLab/caramel/actions/artifacts | grep -m 1 -A 4 "linux-musl" | grep archive_download_url | cut -d '"' -f4 | xargs -t curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -Lo caramel.zip
+        unzip caramel.zip
+        rm caramel.zip
+        tar -xf release.tar.gz
+        rm release.tar.gz
+        chmod +x caramel/bin/caramel
+
+    - name: test chapter 1
+      run: |
+        echo -e "1.0\n2.0\n-0.5" | ./run.sh 01 > test01run
+        cmp test01 test01run
+
+    - name: test chapter 2
+      run: |
+        ./run.sh 02 > test02run
+        cmp test02 test02run
+

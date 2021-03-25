@@ -1,0 +1,71 @@
+Compiling my_types.erl	OK
+Compiling a_guided_tour.erl	OK
+Sweets acquired!
+
+caramel_as_a_calculator
+7
+2
+9.5
+100
+true
+7
+14
+7
+21
+8
+
+functions_and_type_inference
+4
+16
+0.5714285714285714
+4
+6
+4
+6
+<<"loooooong">>
+4
+true
+
+tuples
+{3,<<"three">>}
+{3,<<"four">>,5.0}
+3
+<<"three">>
+8
+35.79511139806664
+
+lists
+[<<"Caramel">>,<<"Perl">>,<<"C">>]
+3
+[7,4,1]
+[<<"French">>,<<"Spanish">>,<<"Caramel">>,<<"Perl">>,<<"C">>]
+[<<"Caramel">>,<<"Perl">>,<<"C">>]
+[{<<"Caramel">>,<<"Perl">>,<<"C">>}]
+{1,2,3}
+[1,2,3]
+[1,2,3,4,5,6]
+<<"English">>
+<<"English">>
+<<"Caramel">>
+6
+[1,2,3,4,1]
+14
+56
+
+options
+{some,2}
+none
+[<<"Hello_World.TXT">>,<<"Hello_World.txt">>,<<"Hello_World">>]
+[<<"Hello_World.txt">>,<<"Hello_World.txt">>,<<"Hello_World">>]
+
+records_and_variants
+#{x => 3.0,y => -4.0}
+false
+true
+
+imperative_programming
+Probably none of imperative parts of OCaml are supported in Caramel, that's fine
+<<"a">>
+Summing up total, enter floats (e.g. 3.0) in separate lines, to finish use ctrl + d:
+Total: 2.5
+
