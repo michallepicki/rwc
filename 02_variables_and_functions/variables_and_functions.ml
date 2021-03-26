@@ -16,7 +16,7 @@ let run () =
   print z;
   let languages = "OCaml,Perl,C++,C" in
   let dashed_languages =
-    let language_list = Binary.split languages [","] [Binary.Global] in
+    let language_list = Binary.split languages [ "," ] [ Binary.Global ] in
     binary_concat language_list "-"
   in
   print dashed_languages;
@@ -29,12 +29,13 @@ let run () =
     area_of_circle outer_radius -. area_of_circle inner_radius
   in
   print (area_of_ring 1. 3.);
-  let (ints,strings) = Lists.unzip [(1,"one"); (2,"two"); (3,"three")] in
+  let ints, strings = Lists.unzip [ (1, "one"); (2, "two"); (3, "three") ] in
   print ints;
   print strings;
   let upcase_first_entry line =
-    let (first :: rest) = Binary.split line [","] [Binary.Global] in
-    binary_concat (My_externals.string_uppercase first :: rest) "," in
+    let (first :: rest) = Binary.split line [ "," ] [ Binary.Global ] in
+    binary_concat (My_externals.string_uppercase first :: rest) ","
+  in
   print (upcase_first_entry "one,two,three");
   print (upcase_first_entry "");
 

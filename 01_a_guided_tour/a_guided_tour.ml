@@ -152,7 +152,7 @@ let downcase_extension filename =
   | Some (base, ext) -> base ^ "." ^ My_externals.string_lowercase ext
 
 let downcase_extension2 filename =
-  match Binary.split filename ["."] [Binary.Global] with
+  match Binary.split filename [ "." ] [ Binary.Global ] with
   | [] -> filename
   | [ _ ] -> filename
   | [ base; ext ] -> base ^ "." ^ My_externals.string_lowercase ext
