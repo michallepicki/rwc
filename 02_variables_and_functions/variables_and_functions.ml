@@ -44,9 +44,17 @@ let functions () =
   print_string "functions\n";
   print ((fun x -> x + 1) 7);
   print (Lists.map (fun x -> x + 1) [ 1; 2; 3 ]);
+
   (* caramel bug below: *)
   (* let transforms = [ My_externals.string_uppercase; My_externals.string_lowercase ] in
      print (Lists.map (fun g -> g "Hello World") transforms); *)
+  let transforms =
+    [
+      (fun x -> My_externals.string_uppercase x);
+      (fun x -> My_externals.string_lowercase x);
+    ]
+  in
+  print (Lists.map (fun g -> g "Hello World") transforms);
   let plusone x = x + 1 in
   print (plusone 3);
   let plusone2 x = x + 1 in

@@ -77,17 +77,27 @@ end(7)),
   print(lists:map(fun
   (X) -> erlang:'+'(X, 1)
 end, [1 | [2 | [3 | []]]])),
-  Plusone = fun
-    (X) -> erlang:'+'(X, 1)
-  end,
+  Transforms = [fun
+  (X) -> my_externals:string_uppercase(X)
+end | [fun
+  (X) -> my_externals:string_lowercase(X)
+end | []]],
   begin
-    print(Plusone(3)),
-    Plusone2 = fun
+    print(lists:map(fun
+  (G) -> G(<<"Hello World">>)
+end, Transforms)),
+    Plusone = fun
       (X) -> erlang:'+'(X, 1)
     end,
     begin
       print(Plusone(3)),
-      print_string(<<"\n">>)
+      Plusone2 = fun
+        (X) -> erlang:'+'(X, 1)
+      end,
+      begin
+        print(Plusone(3)),
+        print_string(<<"\n">>)
+      end
     end
   end.
 
