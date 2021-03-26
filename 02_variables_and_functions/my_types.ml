@@ -1,4 +1,1 @@
-type string_split_opt =
-  | Leading
-  | Trailing
-  | All
+type string_split_opt = Leading | Trailing | All

@@ -22,14 +22,33 @@ binary_concat(Binaries, Joiner) ->
 -spec run() -> ok.
 run() ->
   print_string(<<"variables\n">>),
-  Languages = <<"OCaml,Perl,C++,C">>,
-  Dashed_languages = begin
-    Language_list = my_externals:string_split(Languages, <<",">>, all),
-    binary_concat(Language_list, <<"-">>)
-  end,
+  X = 3,
+  Y = 4,
+  Z = erlang:'+'(X, Y),
   begin
-    print(Dashed_languages),
-    print_string(<<"\n">>)
+    print(X),
+    print(Y),
+    print(Z),
+    Languages = <<"OCaml,Perl,C++,C">>,
+    Dashed_languages = begin
+      Language_list = my_externals:string_split(Languages, <<",">>, all),
+      binary_concat(Language_list, <<"-">>)
+    end,
+    begin
+      print(Dashed_languages),
+      Area_of_ring = fun
+        (Inner_radius, Outer_radius) ->
+  Pi = my_externals:pi(),
+  Area_of_circle = fun
+    (R) -> erlang:'*'(erlang:'*'(Pi, R), R)
+  end,
+  erlang:'-'(Area_of_circle(Outer_radius), Area_of_circle(Inner_radius))
+      end,
+      begin
+        print(Area_of_ring(1.0, 3.0)),
+        print_string(<<"\n">>)
+      end
+    end
   end.
 
 
