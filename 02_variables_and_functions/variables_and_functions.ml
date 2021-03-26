@@ -6,7 +6,7 @@ let binary_concat binaries joiner =
   let join elem acc = acc ^ elem in
   Lists.foldl join "" (Lists.join joiner binaries)
 
-let run () =
+let variables () =
   print_string "variables\n";
   let x = 3 in
   let y = 4 in
@@ -38,5 +38,22 @@ let run () =
   in
   print (upcase_first_entry "one,two,three");
   print (upcase_first_entry "");
+  print_string "\n"
 
+let functions () =
+  print_string "functions\n";
+  print ((fun x -> x + 1) 7);
+  print (Lists.map (fun x -> x + 1) [ 1; 2; 3 ]);
+  (* caramel bug below: *)
+  (* let transforms = [ My_externals.string_uppercase; My_externals.string_lowercase ] in
+     print (Lists.map (fun g -> g "Hello World") transforms); *)
+  let plusone x = x + 1 in
+  print (plusone 3);
+  let plusone2 x = x + 1 in
+  print (plusone 3);
+  print_string "\n"
+
+let run () =
+  variables ();
+  functions ();
   print_string "\n"

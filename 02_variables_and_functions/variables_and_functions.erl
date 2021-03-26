@@ -2,9 +2,11 @@
 -module(variables_and_functions).
 
 -export([binary_concat/2]).
+-export([functions/0]).
 -export([print/1]).
 -export([print_string/1]).
 -export([run/0]).
+-export([variables/0]).
 
 -spec print_string(_) -> ok.
 print_string(Thing) -> io:format(<<"~ts">>, [Thing | []]).
@@ -19,8 +21,8 @@ binary_concat(Binaries, Joiner) ->
   end,
   lists:foldl(Join, <<"">>, lists:join(Joiner, Binaries)).
 
--spec run() -> ok.
-run() ->
+-spec variables() -> ok.
+variables() ->
   print_string(<<"variables\n">>),
   X = 3,
   Y = 4,
@@ -65,5 +67,34 @@ run() ->
       end
     end
   end.
+
+-spec functions() -> ok.
+functions() ->
+  print_string(<<"functions\n">>),
+  print(fun
+  (X) -> erlang:'+'(X, 1)
+end(7)),
+  print(lists:map(fun
+  (X) -> erlang:'+'(X, 1)
+end, [1 | [2 | [3 | []]]])),
+  Plusone = fun
+    (X) -> erlang:'+'(X, 1)
+  end,
+  begin
+    print(Plusone(3)),
+    Plusone2 = fun
+      (X) -> erlang:'+'(X, 1)
+    end,
+    begin
+      print(Plusone(3)),
+      print_string(<<"\n">>)
+    end
+  end.
+
+-spec run() -> ok.
+run() ->
+  variables(),
+  functions(),
+  print_string(<<"\n">>).
 
 
