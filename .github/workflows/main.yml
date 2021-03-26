@@ -16,7 +16,7 @@ jobs:
           echo "`pwd`/erlang/bin" >> $GITHUB_PATH
           curl -Lo erlang.tar.gz https://repo.hex.pm/builds/otp/ubuntu-20.04/OTP-23.3.tar.gz
           mkdir erlang
-          tar -zxfv erlang.tar.gz -C erlang --strip-components=1
+          tar zxf erlang.tar.gz -C erlang --strip-components=1
           erlang/Install -minimal  `pwd`/erlang
           rm erlang.tar.gz
 
@@ -26,7 +26,7 @@ jobs:
           curl --stderr - -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/AbstractMachinesLab/caramel/actions/artifacts | grep -m 1 -A 4 "linux-musl" | grep archive_download_url | cut -d '"' -f4 | xargs -t curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -Lo caramel.zip
           unzip caramel.zip
           rm caramel.zip
-          tar -zxfv release.tar.gz
+          tar zxf release.tar.gz
           rm release.tar.gz
           chmod +x caramel/bin/caramel
           which caramel
