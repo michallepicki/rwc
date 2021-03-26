@@ -1,8 +1,8 @@
 -module(my_externals).
--export([cheat/1, string_split/3, pi/0]).
+-export([cheat/1, pi/0, string_uppercase/1]).
 
 cheat(X) -> X.
 
-string_split(S, Pattern, Where) -> string:split(S, Pattern, Where).
-
 pi() -> math:pi().
+
+string_uppercase(S) -> string:uppercase(S).

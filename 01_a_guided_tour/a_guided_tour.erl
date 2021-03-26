@@ -273,7 +273,7 @@ downcase_extension(Filename) ->
 
 -spec downcase_extension2(binary()) -> binary().
 downcase_extension2(Filename) ->
-  case my_externals:string_split(Filename, <<".">>, trailing) of
+  case binary:split(Filename, [<<".">> | []], [global | []]) of
     [] -> Filename;
     [_ | []] -> Filename;
     [Base | [Ext | []]] -> caramel_runtime:binary_concat(Base, caramel_runtime:binary_concat(<<".">>, my_externals:string_lowercase(Ext)))

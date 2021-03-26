@@ -31,7 +31,7 @@ run() ->
     print(Z),
     Languages = <<"OCaml,Perl,C++,C">>,
     Dashed_languages = begin
-      Language_list = my_externals:string_split(Languages, <<",">>, all),
+      Language_list = binary:split(Languages, [<<",">> | []], [global | []]),
       binary_concat(Language_list, <<"-">>)
     end,
     begin
@@ -46,7 +46,22 @@ run() ->
       end,
       begin
         print(Area_of_ring(1.0, 3.0)),
-        print_string(<<"\n">>)
+        {Ints, Strings} = lists:unzip([{1, <<"one">>} | [{2, <<"two">>} | [{3, <<"three">>} | []]]]),
+        begin
+          print(Ints),
+          print(Strings),
+          Upcase_first_entry = fun
+            (Line) ->
+  case binary:split(Line, [<<",">> | []], [global | []]) of
+    [First | Rest] -> binary_concat([my_externals:string_uppercase(First) | Rest], <<",">>)
+  end
+          end,
+          begin
+            print(Upcase_first_entry(<<"one,two,three">>)),
+            print(Upcase_first_entry(<<"">>)),
+            print_string(<<"\n">>)
+          end
+        end
       end
     end
   end.
