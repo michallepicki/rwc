@@ -7,15 +7,22 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-    container: docker://hexpm/erlang:23.3-alpine-3.13.2
+    runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
 
-    - run: echo "`pwd`/caramel/bin" >> $GITHUB_PATH
+    - name: Install erlang
+      run: |
+        echo "`pwd`/erlang/bin" >> $GITHUB_PATH
+        curl -Lo erlang.tar.gz https://repo.hex.pm/builds/otp/ubuntu-20.04/OTP-23.3.tar.gz
+        mkdir erlang
+        tar zxf erlang.tar.gz -C erlang --strip-components=1
+        erlang/Install -minimal  `pwd`/erlang
+        rm erlang.tar.gz
+
     - name: Install caramel
       run: |
-        apk add curl unzip tar
+        echo "`pwd`/caramel/bin" >> $GITHUB_PATH
         curl --stderr - -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/AbstractMachinesLab/caramel/actions/artifacts | grep -m 1 -A 4 "linux-musl" | grep archive_download_url | cut -d '"' -f4 | xargs -t curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -Lo caramel.zip
         unzip caramel.zip
         rm caramel.zip
