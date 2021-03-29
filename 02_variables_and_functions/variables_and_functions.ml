@@ -46,10 +46,7 @@ let functions () =
   print (Lists.map (fun x -> x + 1) [ 1; 2; 3 ]);
 
   let transforms =
-    [
-      (My_externals.string_uppercase);
-      (My_externals.string_lowercase);
-    ]
+    [ My_externals.string_uppercase; My_externals.string_lowercase ]
   in
   print (Lists.map (fun g -> g "Hello World") transforms);
   let plusone x = x + 1 in
