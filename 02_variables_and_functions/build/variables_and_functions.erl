@@ -77,11 +77,7 @@ end(7)),
   print(lists:map(fun
   (X) -> erlang:'+'(X, 1)
 end, [1 | [2 | [3 | []]]])),
-  Transforms = [fun
-  (X) -> my_externals:string_uppercase(X)
-end | [fun
-  (X) -> my_externals:string_lowercase(X)
-end | []]],
+  Transforms = [fun my_externals:string_uppercase/1 | [fun my_externals:string_lowercase/1 | []]],
   begin
     print(lists:map(fun
   (G) -> G(<<"Hello World">>)
