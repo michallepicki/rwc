@@ -8,16 +8,38 @@ variables
 7
 <<"OCaml-Perl-C++-C">>
 25.132741228718345
+
+pattern_matching_and_let
 [1,2,3]
 [<<"one">>,<<"two">>,<<"three">>]
 <<"ONE,two,three">>
 <<>>
 
-functions
+anonymous_functions
 8
 [2,3,4]
 [<<"HELLO WORLD">>,<<"hello world">>]
 4
+8
+
+multiargument_functions
+8
+1
+1
+
+recursive functions
+[true,false,true,false,true,false]
+[false,true,false,true,false,true]
+
+prefix_and_infix_operators
 4
+7
+3
+<<"/bin">>
+<<"/sbin">>
+<<"/usr/bin">>
+<<"/usr/local/bin">>
+<<"Two">>
+<<"lines">>
 
 
