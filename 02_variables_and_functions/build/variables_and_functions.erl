@@ -3,6 +3,7 @@
 
 -export([anonymous_functions/0]).
 -export([binary_concat/2]).
+-export([declaring_functions_with_function/0]).
 -export([is_even/1]).
 -export([is_odd/1]).
 -export([multiargument_functions/0]).
@@ -162,6 +163,18 @@ prefix_and_infix_operators() ->
     print_string(<<"\n">>)
   end.
 
+-spec declaring_functions_with_function() -> ok.
+declaring_functions_with_function() ->
+  print_string(<<"declaring_functions_with_function\n">>),
+  Some_or_zero = fun
+    ({some, X}) -> X;
+    (none) -> 0
+  end,
+  begin
+    print(lists:map(Some_or_zero, [{some, 3} | [none | [{some, 4} | []]]])),
+    print_string(<<"\n">>)
+  end.
+
 -spec run() -> ok.
 run() ->
   variables(),
@@ -170,6 +183,7 @@ run() ->
   multiargument_functions(),
   recursive_functions(),
   prefix_and_infix_operators(),
+  declaring_functions_with_function(),
   print_string(<<"\n">>).
 
 

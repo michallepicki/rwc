@@ -30,12 +30,6 @@ jobs:
           rm release.tar.gz
           chmod +x caramel/bin/caramel
 
-      - name: test chapter 1
-        run: |
-          echo -e "1.0\n2.0\n-0.5" | ./run.sh 01 > test01run
-          cmp test01 test01run
+      - name: test
+        run: ./tests.sh
 
-      - name: test chapter 2
-        run: |
-          ./run.sh 02 > test02run
-          cmp test02 test02run

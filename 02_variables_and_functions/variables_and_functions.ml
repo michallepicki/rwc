@@ -128,6 +128,22 @@ let prefix_and_infix_operators () =
   (* operator associativity, left or right, should be based on operator prefix *)
   print_string "\n"
 
+let declaring_functions_with_function () =
+  print_string "declaring_functions_with_function\n";
+  let some_or_zero = function
+  | Some x -> x
+  | None -> 0 in
+  print (Lists.map some_or_zero [Some 3; None; Some 4]);
+  (* caramel bug,
+     function keyword combinded with regular function declaration,
+     we should get a function that takes two arguments *)
+  (* let some_or_default default = function
+  | Some x -> x
+  | None -> default in
+  print (some_or_default 3 (Some 5));
+  print (Lists.map (fun x -> some_or_default 100 x) [Some 3; None; Some 4]);*)
+  print_string "\n"
+
 let run () =
   variables ();
   pattern_matching_and_let ();
@@ -135,4 +151,5 @@ let run () =
   multiargument_functions ();
   recursive_functions ();
   prefix_and_infix_operators ();
+  declaring_functions_with_function ();
   print_string "\n"

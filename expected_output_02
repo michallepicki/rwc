@@ -42,4 +42,7 @@ prefix_and_infix_operators
 <<"Two">>
 <<"lines">>
 
+declaring_functions_with_function
+[3,0,4]
+
 
