@@ -136,7 +136,8 @@ let declaring_functions_with_function () =
   print (Lists.map some_or_zero [Some 3; None; Some 4]);
   (* caramel bug,
      function keyword combinded with regular function declaration,
-     we should get a function that takes two arguments *)
+     we should keep track of this and know how many arguments a function takes
+     and how many should be passed to the function that it returns instead *)
   (* let some_or_default default = function
   | Some x -> x
   | None -> default in
