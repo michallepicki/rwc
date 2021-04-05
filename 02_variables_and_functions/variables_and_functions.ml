@@ -153,4 +153,5 @@ let run () =
   recursive_functions ();
   prefix_and_infix_operators ();
   declaring_functions_with_function ();
+  (* labeled arguments not supported in caramel yet *)
   print_string "\n"
