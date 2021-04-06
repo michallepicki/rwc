@@ -1,0 +1,20 @@
+Compiling lists_and_patterns.erl	OK
+Compiling main.erl	OK
+Sweets acquired!
+
+list_basics
+[1,2,3]
+[3]
+[<<"three">>]
+[1,2,3]
+[0,1,2,3]
+[1,2,3]
+
+using_patterns_to_extract_data_from_a_list
+6
+0
+[]
+[1,3]
+[1,2,3]
+
+
