@@ -105,9 +105,9 @@ let recursive_functions () =
 let prefix_and_infix_operators () =
   print_string "prefix_and_infix_operators\n";
   print (My_externals.max 3 4);
-  print (3 + 4);
   (* same as
      print ((+) 3 4); *)
+  print (3 + 4);
   (* this will work with the partial application fix
      print (Lists.map (( + ) 3) [ 4; 5; 6 ]); *)
   (* can't declare operators yet
@@ -124,25 +124,25 @@ let prefix_and_infix_operators () =
   let deduped_path = My_externals.lists_usort split_path in
   Lists.foreach print deduped_path;
   Lists.foreach print [ "Two"; "lines" ];
+  (* partial application not working yet *)
   (* Lists.foreach print; *)
   (* operator associativity, left or right, should be based on operator prefix *)
+  (* let (^>) x f = f x; *)
   print_string "\n"
 
 let declaring_functions_with_function () =
   print_string "declaring_functions_with_function\n";
-  let some_or_zero = function
-  | Some x -> x
-  | None -> 0 in
-  print (Lists.map some_or_zero [Some 3; None; Some 4]);
+  let some_or_zero = function Some x -> x | None -> 0 in
+  print (Lists.map some_or_zero [ Some 3; None; Some 4 ]);
   (* caramel bug,
      function keyword combinded with regular function declaration,
      we should keep track of this and know how many arguments a function takes
      and how many should be passed to the function that it returns instead *)
   (* let some_or_default default = function
-  | Some x -> x
-  | None -> default in
-  print (some_or_default 3 (Some 5));
-  print (Lists.map (fun x -> some_or_default 100 x) [Some 3; None; Some 4]);*)
+     | Some x -> x
+     | None -> default in
+     print (some_or_default 3 (Some 5));
+     print (Lists.map (fun x -> some_or_default 100 x) [Some 3; None; Some 4]);*)
   print_string "\n"
 
 let run () =
@@ -153,5 +153,7 @@ let run () =
   recursive_functions ();
   prefix_and_infix_operators ();
   declaring_functions_with_function ();
-  (* labeled arguments not supported in caramel yet *)
+  (* labeled and optional arguments not supported in caramel yet *)
+  (* labeled_arguments ();
+     optional_arguments (); *)
   print_string "\n"

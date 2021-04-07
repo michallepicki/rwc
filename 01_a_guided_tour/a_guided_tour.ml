@@ -116,11 +116,11 @@ let lists () =
   (* [ "Caramel", "Perl", "C" ] is the same as *)
   print [ ("Caramel", "Perl", "C") ];
   print (1, 2, 3);
-  print [ 1; 2; 3 ];
-  (* formatter turns following examples to above representation
+  (* formatter turns the following three examples to the same representation
    * print (1 :: (2 :: (3 :: []))) ;
    * print (1 :: 2 :: 3 :: []) ;
    *)
+  print [ 1; 2; 3 ];
   print ([ 1; 2; 3 ] @ [ 4; 5; 6 ]);
   print (my_favorite_language [ "English"; "Spanish"; "French" ]);
   print (my_favorite_language2 [ "English"; "Spanish"; "French" ]);

@@ -48,7 +48,7 @@ sum(L) ->
 drop_value(L, To_drop) ->
   case L of
     [] -> [];
-    [To_dropp | Tl] -> drop_value(Tl, To_dropp);
+    [Renamed_to_drop | Tl] -> drop_value(Tl, Renamed_to_drop);
     [Hd | Tl] -> [Hd | drop_value(Tl, To_drop)]
   end.
 
